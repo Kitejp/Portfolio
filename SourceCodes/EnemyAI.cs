@@ -42,6 +42,7 @@ public class EnemyAI : EnemyManager
             {
                 PathFollow();
             }
+            // 敵がプレイヤーを追従しない場合の処理
             else
             {
                 if (collisionCheck.isOn)
@@ -75,6 +76,9 @@ public class EnemyAI : EnemyManager
             seeker.StartPath(rb.position, target.position, OnPathComplete);
     }
 
+    /// <summary>
+    /// 敵がプレイヤーを追従する場合の処理
+    /// </summary>
     public virtual void PathFollow()
     {
         if(path == null)
@@ -106,6 +110,7 @@ public class EnemyAI : EnemyManager
             currentWaypoint++;
         }
 
+        // 方向転換する場合の処理
         if (directionLookEnabled)
         {
             if(rb.velocity.x > 0.05f)
@@ -130,6 +135,9 @@ public class EnemyAI : EnemyManager
         }
     }
 
+    /// <summary>
+    /// プレイヤーが敵の検知範囲に入った場合の処理
+    /// </summary>
     protected bool TargetInDistance()
     {
         return Vector2.Distance(transform.position, target.transform.position) < activateDistance;
