@@ -14,6 +14,7 @@ public class ShortRangeAttackEnemy : EnemyAI
 
     private void Update()
     {
+        // x方向の速度によって、歩行のアニメーションを再生するかどうか処理する
         if (rb.velocity.x > 0.05f) 
         {
             anim.SetBool("move", true);
@@ -27,6 +28,7 @@ public class ShortRangeAttackEnemy : EnemyAI
             anim.SetBool("move", false);
         }
 
+        // プレイヤーと敵との間隔が10以下だと攻撃する
         if (Vector2.Distance(transform.position, target.position) < 10f)
         {
             anim.SetTrigger("IsAttack");

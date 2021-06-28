@@ -26,6 +26,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// リトライした時の処理
+    /// </summary>
     public void RetryGame()
     {
         isGameOver = false;

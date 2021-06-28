@@ -93,6 +93,7 @@ public class EnemyAI : EnemyManager
         Vector2 direction = ((Vector2)path.vectorPath[currentWaypoint] - rb.position).normalized;
         Vector2 force = direction * speed * Time.deltaTime;
 
+        // ジャンプの処理
         if(jumpEnabled && isGrounded)
         {
             if (direction.y > jumpNodeHeightRequirement)

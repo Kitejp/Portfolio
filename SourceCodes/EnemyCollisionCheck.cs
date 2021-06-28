@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// 敵が壁や他の敵にぶつかったときの判定を行うスクリプト
 public class EnemyCollisionCheck : MonoBehaviour
 {
     /// <summary>

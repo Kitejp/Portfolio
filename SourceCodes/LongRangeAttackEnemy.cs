@@ -16,6 +16,7 @@ public class LongRangeAttackEnemy : EnemyAI
 
     void Update()
     {
+        // x方向の速度によって、歩行のアニメーションを再生するかどうか処理する
         if (rb.velocity.x > 0.05f)
         {
             anim.SetBool("move", true);
@@ -29,6 +30,7 @@ public class LongRangeAttackEnemy : EnemyAI
             anim.SetBool("move", false);
         }
 
+        // y方向の速度によって、ジャンプのアニメーションを再生するかどうか処理する
         if (rb.velocity.y > 0.05f)
         {
             anim.SetBool("jump", true);
@@ -38,6 +40,7 @@ public class LongRangeAttackEnemy : EnemyAI
             anim.SetBool("jump", false);
         }
 
+        // プレイヤーと敵との間隔が50以下だと攻撃する
         if (Vector2.Distance(transform.position, target.position) < 50f)
         {
             currentTime += Time.deltaTime;
@@ -50,6 +53,9 @@ public class LongRangeAttackEnemy : EnemyAI
         }
     }
 
+    /// <summary>
+    /// 攻撃の処理
+    /// </summary>
     private void Attack()
     {
         anim.SetTrigger("IsShooting");
@@ -57,6 +63,9 @@ public class LongRangeAttackEnemy : EnemyAI
         Instantiate(bullet, attackPoint.position, Quaternion.identity);
     }
 
+    /// <summary>
+    /// ダメージを受けた時の処理
+    /// </summary>
     public override void OnDamage()
     {
         base.OnDamage();
