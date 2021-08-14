@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class PlayerHPManager : MonoBehaviour
 {
-    public GameObject hpSliderObj;
-    public GameObject gpSliderObj;
+    [Header("HPバーのオブジェクト")]public GameObject hpSliderObj;
+    [Header("GP（ガードポイント）バーのオブジェクト")]public GameObject gpSliderObj;
 
     private Slider hpSlider;
     private Slider gpSlider;
@@ -33,6 +33,7 @@ public class PlayerHPManager : MonoBehaviour
 
     void Update()
     {
+        // HPとGPを更新する
         if (oldHp != GameManager.instance.playerHp)
         {
             hpSlider.value = GameManager.instance.playerHp;

@@ -8,15 +8,18 @@ public class FadeImageManager : MonoBehaviour
     [Header("最初からフェードインが完了しているかどうか")] public bool firstFadeInComp;
 
     private Image image;
+
     private int frameCount;
+
     private float timer;
+
     private bool fadeIn;
     private bool compFadeIn;
     private bool fadeOut;
     private bool compFadeOut;
 
     /// <summary>
-    /// フェードインを開始する
+    /// フェードインを開始する時の処理
     /// </summary>
     public void StartFadeIn()
     {
@@ -42,7 +45,7 @@ public class FadeImageManager : MonoBehaviour
     }
 
     /// <summary>
-    /// フェードアウトを開始する
+    /// フェードアウトを開始する時の処理
     /// </summary>
     public void StartFadeOut()
     {
@@ -98,6 +101,9 @@ public class FadeImageManager : MonoBehaviour
         ++frameCount;
     }
 
+    /// <summary>
+    /// フェードインしている時の処理
+    /// </summary>
     private void FadeInUpdate()
     {
         if(timer < 1f)
@@ -112,6 +118,9 @@ public class FadeImageManager : MonoBehaviour
         timer += Time.deltaTime;
     }
 
+    /// <summary>
+    /// フェードアウトしている時の処理
+    /// </summary>
     private void FadeOutUpdate()
     {
         if (timer < 1f)
@@ -126,6 +135,9 @@ public class FadeImageManager : MonoBehaviour
         timer += Time.deltaTime;
     }
 
+    /// <summary>
+    /// フェードインが完了した時の処理
+    /// </summary>
     private void FadeInComplete()
     {
         image.color = new Color(1, 1, 1, 0);
@@ -136,6 +148,9 @@ public class FadeImageManager : MonoBehaviour
         compFadeIn = true;
     }
 
+    /// <summary>
+    /// フェードアウトが完了した時の処理
+    /// </summary>
     private void FadeOutComplete()
     {
         image.color = new Color(1, 1, 1, 1);

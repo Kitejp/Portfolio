@@ -119,24 +119,36 @@ public class StageManager : MonoBehaviour
         GameManager.instance.playerHp += 50;
     }
 
+    /// <summary>
+    /// メニューの「タイトルに戻る」ボタンを押したときの処理
+    /// </summary>
     public void Title()
     {
         Time.timeScale = 1;
         ChangeScene(0);
     }
 
+    /// <summary>
+    /// メニューを開いている時の処理
+    /// </summary>
     private void Menu()
     {
         Time.timeScale = 0;
         menuObj.SetActive(true);
     }
 
+    /// <summary>
+    /// メニューの「操作説明」ボタンを押したときの処理
+    /// </summary>
     public void Explanation()
     {
         explanationObj.SetActive(true);
         menuObj.SetActive(false);
     }
 
+    /// <summary>
+    /// メニューの「戻る」ボタンを押したときの処理
+    /// </summary>
     public void Back()
     {
         Time.timeScale = 1;
@@ -144,6 +156,10 @@ public class StageManager : MonoBehaviour
         explanationObj.SetActive(false);
     }
 
+    /// <summary>
+    /// シーン遷移するときの処理
+    /// </summary>
+    /// <param name="num"></param>
     public void ChangeScene(int num)
     {
         if (fade != null)

@@ -9,21 +9,15 @@ public class PlayerController : MonoBehaviour
     [Header("ジャンプする時にかかる力の大きさ")] public float jumpForce;
     [Header("接地判定の大きさ")] public float checkRadius;
     [Header("ジャンプ時間")]public float jumpTime;
-    //[Header("ジャンプする高さ")] public float jumpHeight; 
-    //[Header("ジャンプ制限時間")] public float jumpLimitTime;
     [Header("攻撃範囲")]public float attackRadius;
     [Header("壁ジャンプする時にかかる力の大きさ")]public float wallJumpForce = 20f;
     [Header("壁ジャンプの時間")]public float wallSlideTime = 0.2f;
     [Header("壁を滑る速度の最小値")]public float wallSlideSpeedMin = 0.5f;
     [Header("壁を判定する距離")]public float wallDistance = 0.4f;
 
-    //public GameObject slideDust;
-
-    //[Header("接地判定")] public HeadCheck groundCheck;
     [Header("頭をぶつけた判定")] public HeadCheck headCheck;
 
     [Header("ダッシュの速さ表現")] public AnimationCurve dashCurve;
-    //[Header("ジャンプの速さ表現")] public AnimationCurve jumpCurve;
 
     [Header("攻撃判定の位置")]public Transform attackPoint;
     [Header("プレイヤーの足の座標")] public Transform feetPos;
@@ -32,7 +26,7 @@ public class PlayerController : MonoBehaviour
     [Header("地面のレイヤー")] public LayerMask groundLayer;
 
     [Header("音源")]public AudioSource audioSource;
-    [Header("効果音")]public AudioClip jump, sword, hit;
+    [Header("効果音")]public AudioClip run, jump, sword, hit;
     #endregion
 
     #region //プライベート変数
@@ -42,6 +36,7 @@ public class PlayerController : MonoBehaviour
     private BoxCollider2D col;
     private RaycastHit2D wallCheckHit;
 
+    // 動作の判定
     private bool isRun;
     private bool isGrounded;
     private bool isHead; 
@@ -61,7 +56,6 @@ public class PlayerController : MonoBehaviour
     private bool isPushGuardButton;
     private bool isPushRollingButton;
 
-    //private float jumpPos;
     private float jumpTimeCounter;
     private float dashTime;
     private float beforeKey;
@@ -83,6 +77,7 @@ public class PlayerController : MonoBehaviour
     {
         //頭の判定を得る
         isHead = headCheck.IsHead();
+        // 地面のコライダーを取得する
         touchingGround = Physics2D.OverlapCircle(feetPos.position, checkRadius, groundLayer);
 
         if (touchingGround)
@@ -155,9 +150,8 @@ public class PlayerController : MonoBehaviour
     {
         if (!isDie && !GameManager.instance.isGameOver)
         {
-            //各座標軸の速度を求める
+            //x座標軸の速度を求める
             float xSpeed = GetXSpeed();
-            //float ySpeed = GetYSpeed();
 
             //移動速度を設定する
             rb.velocity = new Vector2(xSpeed, rb.velocity.y);
@@ -185,7 +179,6 @@ public class PlayerController : MonoBehaviour
             transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
             dashTime += Time.deltaTime;
             xSpeed = speed;
-            //anim.SetFloat("speed", Mathf.Abs(horizontalKey));
             isRun = true;
         }
         else if (horizontalKey < 0 || isPushLeftButton)
@@ -193,7 +186,6 @@ public class PlayerController : MonoBehaviour
             transform.localScale = new Vector3(-1.5f, 1.5f, 1.5f);
             dashTime += Time.deltaTime;
             xSpeed = -speed;
-            //anim.SetFloat("speed", Mathf.Abs(horizontalKey));
             isRun = true;
         }
         else
@@ -237,7 +229,6 @@ public class PlayerController : MonoBehaviour
                 isJump = true;
                 jumpTimeCounter = jumpTime;
                 rb.velocity = Vector2.up * jumpForce;
-                //audioSource.PlayOneShot(jump);
             }
 
             if (Input.GetKey(KeyCode.Space) || isPushJumpButton)
@@ -325,7 +316,10 @@ public class PlayerController : MonoBehaviour
     {
         audioSource.PlayOneShot(sword);
 
+        // OverlapCircleAllでプレイヤーが攻撃した時に触れた敵（のコライダー）を取得する
         Collider2D[] hitEnemys = Physics2D.OverlapCircleAll(attackPoint.position, attackRadius, enemyLayer);
+
+        // 取得した敵にダメージを与える
         foreach (Collider2D hitEnemy in hitEnemys)
         {
             hitEnemy.GetComponent<EnemyManager>().OnDamage();
@@ -347,6 +341,9 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Sceneビューで攻撃範囲を可視化できるようにするためのメソッド
+    /// </summary>
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
@@ -361,11 +358,13 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     public void Block()
     {
+        // ガードポイント（ゲーム画面上の青色のゲージ）がある場合は、防御できる
         if(GameManager.instance.playerGuardPoint > 0)
         {
             anim.SetTrigger("blockSuccess");
             GameManager.instance.playerGuardPoint -= 10;
         }
+        // ガードポイントがない場合は、防御出来ずにダメージを受ける
         else
         {
             GameManager.instance.playerGuardPoint = 0;
@@ -476,7 +475,10 @@ public class PlayerController : MonoBehaviour
             PlayerHurt();
         }
     }
-
+    /// <summary>
+    /// 穴に落ちた時の処理
+    /// </summary>
+    /// <param name="collision"></param>
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "DeadArea")
@@ -566,4 +568,20 @@ public class PlayerController : MonoBehaviour
         isPushGuardButton = false;
     }
     #endregion
+
+    /// <summary>
+    /// 走っている時に効果音を再生する(*このメソッドはAnimationのEventで呼び出す)
+    /// </summary>
+    public void RunSE()
+    {
+        audioSource.PlayOneShot(run);
+    }
+
+    /// <summary>
+    /// ジャンプ時に効果音を再生する(*このメソッドはAnimationのEventで呼び出す)
+    /// </summary>
+    public void JumpSE()
+    {
+        audioSource.PlayOneShot(jump);
+    }
 }

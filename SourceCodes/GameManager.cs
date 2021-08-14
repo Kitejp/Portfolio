@@ -4,18 +4,22 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    // GameManagerオブジェクトをインスタンス化するための変数
     public static GameManager instance = null;
+
     [Header("スコア")]public int score;
     [Header("ステージの番号")]public int stageNum;
     [Header("現在のコンティニュー位置")] public int continueNum;
     [Header("プレイヤーのHP")]public int playerHp;
-    public int playerGuardPoint;
+    [Header("プレイヤーのガードポイント")]public int playerGuardPoint;
 
     [HideInInspector] public bool isGameOver = false;
 
     private void Awake()
     {
-        if(instance == null)
+        // GameManagerオブジェクトがインスタンス化されていない場合、インスタンス化する
+        // 理由：他のプログラムからアクセスしやすくするため
+        if (instance == null)
         {
             instance = this;
             DontDestroyOnLoad(this.gameObject);

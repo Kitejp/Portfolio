@@ -19,6 +19,9 @@ public class TitleManager : MonoBehaviour
         backText.transform.parent.gameObject.SetActive(false);
     }
 
+    /// <summary>
+    /// 「ゲームを始める」のボタンを押した時の処理
+    /// </summary>
     public void PressStart()
     {
         if (!firstPush)
@@ -28,6 +31,9 @@ public class TitleManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 「操作説明」のボタンを押した時の処理
+    /// </summary>
     public void Explanation()
     {
         exText.transform.parent.gameObject.SetActive(true);
@@ -38,6 +44,9 @@ public class TitleManager : MonoBehaviour
         titleText.gameObject.SetActive(false);
     }
 
+    /// <summary>
+    /// 「戻る」ボタンを押した時の処理
+    /// </summary>
     public void Back()
     {
         exText.transform.parent.gameObject.SetActive(false);
@@ -48,6 +57,9 @@ public class TitleManager : MonoBehaviour
         titleText.gameObject.SetActive(true);
     }
 
+    /// <summary>
+    /// 「ゲームを終了する」ボタンを押したときの処理
+    /// </summary>
     public void Quit()
     {
         Application.Quit();
@@ -55,6 +67,7 @@ public class TitleManager : MonoBehaviour
 
     private void Update()
     {
+        // フェードアウトが完了した時にシーン遷移
         if(!goNextScene && fade.IsFadeOutComplete())
         {
             GameManager.instance.stageNum = 1;

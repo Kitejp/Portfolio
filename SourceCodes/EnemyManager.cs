@@ -65,6 +65,7 @@ public class EnemyManager : MonoBehaviour
         GameManager.instance.score += this.score;
     }
 
+    #region プレイヤーとの接触判定
     public virtual void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.collider.tag == "Player")
@@ -76,4 +77,6 @@ public class EnemyManager : MonoBehaviour
         if(collision.collider.tag == "Player")
             collisionCheck.isOn = false;
     }
+
+    #endregion
 }

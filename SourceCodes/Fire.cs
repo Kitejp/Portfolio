@@ -10,23 +10,20 @@ public class Fire : MonoBehaviour
 
     private Rigidbody2D rb;
 
-    private GameObject player;
-    private GameObject boss;
+    private PlayerController player;
+    private LongRangeAttackEnemy longRangeEnemy;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        player = GameObject.Find("Player");
-        boss = GameObject.Find("Boss");
+        player = FindObjectOfType<PlayerController>();
+        longRangeEnemy = FindObjectOfType<LongRangeAttackEnemy>();
 
-        if (boss != null)
+        if (player.transform.position.x > longRangeEnemy.transform.position.x)
         {
-            if (player.transform.position.x > boss.transform.position.x)
-            {
-                fireSpeed = -fireSpeed;
-                transform.localScale = new Vector3(5, 5, 5);
-            }
+            fireSpeed = -fireSpeed;
+            transform.localScale = new Vector3(5, 5, 5);
         }
     }
 
@@ -36,8 +33,11 @@ public class Fire : MonoBehaviour
 
         currentTime += Time.deltaTime;
 
-        if (currentTime > spawnTime)
+        if (currentTime > spawnTime) 
+        {
             Destroy(this.gameObject);
+        }
+
     }
 
     private void FireMove()

@@ -11,6 +11,7 @@ public class ScoreManager : MonoBehaviour
     void Start()
     {
         scoreText = GetComponent<Text>();
+
         if(GameManager.instance != null)
         {
             scoreText.text = "Score: " + GameManager.instance.score;
@@ -24,6 +25,7 @@ public class ScoreManager : MonoBehaviour
 
     void Update()
     {
+        // スコアを更新する
         if(oldScore != GameManager.instance.score)
         {
             scoreText.text = "Score: " + GameManager.instance.score;

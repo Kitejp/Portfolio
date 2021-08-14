@@ -12,6 +12,7 @@ public class StageNum : MonoBehaviour
     void Start()
     {
         stageText = GetComponent<Text>();
+
         if(GameManager.instance != null)
         {
             stageText.text = "Stage: " + GameManager.instance.stageNum;

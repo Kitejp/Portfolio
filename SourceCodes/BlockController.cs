@@ -5,13 +5,15 @@ using UnityEngine;
 // ボスと戦闘する際に出現する壁の処理を行うスクリプト
 public class BlockController : MonoBehaviour
 {
+    [Header("ブロックのオブジェクト")]
     public GameObject block1;
     public GameObject block2;
-    public GameObject boss;
+    [Header("ボスのオブジェクト")] public GameObject boss;
 
     // Start is called before the first frame update
     void Start()
     {
+        // 初めは非表示にする
         block1.SetActive(false);
         block2.SetActive(false);
     }
@@ -29,7 +31,7 @@ public class BlockController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // プレイヤーの特定の位置に行った時に、表示する
+        // プレイヤーの特定の位置（ボスの近く）に行った時に、表示する
         if (collision.tag == "Player")
         {
             block1.SetActive(true);

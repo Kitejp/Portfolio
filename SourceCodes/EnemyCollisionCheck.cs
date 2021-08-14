@@ -5,9 +5,7 @@ using UnityEngine;
 // 敵が壁や他の敵にぶつかったときの判定を行うスクリプト
 public class EnemyCollisionCheck : MonoBehaviour
 {
-    /// <summary>
-    /// 判定内に敵か壁がある
-    /// </summary>
+    // 敵か壁があるか判定する
     [HideInInspector]
     public bool isOn;
 

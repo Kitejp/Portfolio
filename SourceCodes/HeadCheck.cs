@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class HeadCheck : MonoBehaviour
 {
-    public bool isHead;
-    public bool isHeadEnter, isHeadStay, isHeadExit;
+    // 頭をぶつけたかどうかを判定するための変数
+    private bool isHead;
+    private bool isHeadEnter, isHeadStay, isHeadExit;
 
     public bool IsHead()
     {
@@ -24,6 +25,8 @@ public class HeadCheck : MonoBehaviour
         return isHead;
     }
 
+
+    #region 頭をぶつけた時の接地判定
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.tag == "Ground")
@@ -47,4 +50,6 @@ public class HeadCheck : MonoBehaviour
             isHeadExit = true;
         }
     }
+
+    #endregion
 }
